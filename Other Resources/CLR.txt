@@ -1,0 +1,103 @@
+/* CLR */
+#include<stdio.h>
+#include<string.h>
+int i,j,z;
+void printtable();
+main()
+{
+char b[5]={'a','d','$','s','c'};
+printf("\n------------------clr----------------------\n");
+printf("\nthe given grammer\n");
+printf("\nS->CC\nC->aC\nC->d\n");
+printf("\n the parsing table of the grammer\n");
+for(z=0;z<5;z++)
+{
+printf("\t%c",b[z]);
+}
+printtable();
+
+}
+ void printtable()
+{
+#include<stdio.h>
+#include<string.h>
+int i,j,z;
+void printtable();
+main()
+{
+char b[5]={'a','d','$','s','c'};
+printf("\n------------------clr----------------------\n");
+printf("\nthe given grammer\n");
+printf("\nS->CC\nC->aC\nC->d\n");
+printf("\n the parsing table of the grammer\n");
+for(z=0;z<5;z++)
+{
+printf("\t%c",b[z]);
+}
+printtable();
+
+}
+ void printtable()
+{
+for(i=0;i<=9;i++)
+{
+printf("\n---------------------------------------------------\n");
+printf("%d",i);
+for(j=0;j<=4;j++)
+{
+
+ if(t[i][j]==-5)
+printf("\t");
+else if(t[i][j]>=1&&t[i][j]<10)
+printf("\t%d",t[i][j]);
+else if(t[i][j]==99)
+printf("\taccepted\t");
+//else if(t[i][j]%2==0)
+else if(t[i][j]%2==0)
+printf("\tr%d",t[i][j]/10);
+else if(t[i][j]%2==1)
+{
+printf("\ts%d",t[i][j]/10);
+continue;
+}
+/*else
+printf("\t");   */
+
+}
+}
+}
+Input / Output:
+$ gcc clr.c
+$ ./a.out
+
+------------------clr----------------------
+
+the given grammer
+
+S->CC
+C->aC
+C->d
+ the parsing table of the grammer
+        a       d       $       s       c
+---------------------------------------------------
+0       s3      s4              1       2
+---------------------------------------------------
+1                       accepted
+---------------------------------------------------
+2       s6      s7                      5
+---------------------------------------------------
+3       s3      s4                      8
+---------------------------------------------------
+4       r3              r3
+---------------------------------------------------
+5       s6              r1
+---------------------------------------------------
+6                                       9
+---------------------------------------------------
+7       r2      s7      r3
+---------------------------------------------------
+8                       r2
+---------------------------------------------------
+9                       r2              
+
+$

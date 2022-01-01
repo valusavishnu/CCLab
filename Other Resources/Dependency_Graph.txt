@@ -1,0 +1,76 @@
+/* DEPENDENCY GRAPH */
+dep.l
+%{
+#include "y.tab.h"
+#include<math.h>
+%}
+%%
+([0-9]+|([0-9]*\.[0-9]+)([eE][-+]?[0-9]+)?) {yylval.dval=atof(yytext);
+return NUMBER;
+}
+log|LOG {return LOG;}
+sin|SIN {return SIN;}
+cos|COS {return COS;}
+[\t];
+\$; {return 0;}
+\n|. {return yytext[0];}
+%%
+dep.y
+
+%{
+#include<math.h>
+#include<stdio.h>
+int sno=1;
+%}
+%union{
+double dval;
+}
+%type<dval>Expr
+%type<dval> T
+%type<dval> F
+%token <dval>NUMBER
+%token LOG,SIN,COS
+%left '+','-'
+%left '*','/'
+%left SIN COS
+%%
+S :Expr'\n' {printf("%g \n",$1); printf("%d . E.val = %g\n",sno,$1); sno++;}
+;
+Expr:Expr '+' T {$$=$1+$3; printf("%d . E.val = %g\n",sno,$$); sno++;}
+    |T     {printf("%d . E.val = %g\n",sno,$$); sno++;}
+;
+T: T '*' F {$$=$1*$3; printf("%d . T.val = %g\n",sno,$$); sno++;}
+  |F       {printf("%d . T.val = %g\n",sno,$$); sno++;}
+;
+F :  NUMBER {$$=$1;  printf("%d . F.val = %g\n",sno,$$); sno++; }
+  ;
+%%
+
+int main()
+{
+yyparse();
+return 0;
+}
+int yywrap()
+{
+return 1;
+}
+int yyerror(char *err)
+{
+printf("%s",err);
+}
+
+Input / Output:
+$ lex dep.l
+$ yacc -d dep.y
+$ gcc lex.yy.c y.tab.c -ll -lm
+$ ./a.out
+6+8*7
+1 . F.val = 6
+2 . T.val = 6
+3 . E.val = 6
+4 . F.val = 8
+5 . T.val = 8
+6 . F.val = 7
+7 . T.val = 56
+8 . E.val = 62

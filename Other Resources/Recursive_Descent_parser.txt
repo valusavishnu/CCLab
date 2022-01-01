@@ -1,0 +1,80 @@
+//Program to implement recursive descent parser
+
+#include<stdio.h>
+#include<string.h>
+void E(),E1(),T(),T1(),F();
+int ip=0;
+static char s[10];
+    int main()
+      {
+        char k;
+        int l;
+        ip=0;
+        printf("enter the input");
+        scanf("%s",s);
+        printf("the string is :%s",s);
+        E();
+        if(s[ip]=='$')
+           printf("\n string is accepted the length of string is %d",strlen(s)-1);
+        else
+           printf("\n string not accepted\n");
+        return 0;
+     }
+void E()
+  {
+      T();
+      E1();
+      return;
+  }
+void E1()
+  {
+      if(s[ip]=='+')
+        {
+           ip++;
+           T();
+           E1();
+        }
+      return;
+  }
+void T()
+  {
+     F();
+     T1();
+     return;
+  }
+void T1()
+  {
+     if(s[ip]=='*')
+       {
+         ip++;
+         F();
+         T1();
+       }
+     return;
+  }
+void F()
+  {
+    if(s[ip]=='(')
+     {
+       ip++;
+       E();
+       if(s[ip]==')')
+         ip++;
+     }
+   else
+      if(s[ip]=='i')
+        ip++;
+   else
+      printf("\n id expected");
+      return;
+  }
+/*
+Output:
+
+cc recurparser.c
+./a.out
+enter the input
+(i+i)*(i*i)$
+the string is :(i+i)*(i*i)$
+string is accepted the length of string is 11
+*/
